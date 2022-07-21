@@ -105,7 +105,6 @@ for __ in range(m+k):
         print(sum(b-1, c-1))
 
 
-
 """     Number Theory     """
 
 # Sieve of Eratosthenes
@@ -118,3 +117,49 @@ for i in range(2, int(SIZE**0.5)+1):
     if prime[i]:
         for j in range(i*2, SIZE, i):
             prime[j] = 0
+
+
+"""     Array Rotate     """
+
+arr = [[1, 2], [3, 4], [5, 6]]
+
+# Clock-Wise-Rotate
+
+rotated = list(zip(*arr[::-1]))
+# [(5, 3, 1), (6, 4, 2)]
+
+# Transposition
+
+rotated = list(zip(*arr))
+# [(1, 3, 5), (2, 4, 6)]
+
+
+"""     Trie     """
+
+class Node(object):
+    def __init__(self, key, data=None):
+        self.key = key
+        self.data = data
+        self.child = {}
+        
+class Trie(object):
+    def __init__(self):
+        self.head = Node(None)
+
+    def insert(self, s):
+        curr = self.head
+        for c in s:
+            if c not in curr.child:
+                curr.child[c] = Node(c)
+            curr = curr.child[c]
+        curr.data = s
+
+    def search(self, s):
+        curr = self.head
+        for c in s:
+            if c in curr.child:
+                curr = curr.child[c]
+            else:
+                return False
+        if curr.data != None:
+            return True
