@@ -1,11 +1,9 @@
 #include<bits/stdc++.h>
-#define FAST ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+using namespace std;
+#define FAST ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+#define ll long long
 #define INF 1e9+7
 #define MOD 1e9+7
-using namespace std;
-
-typedef long long ll;
-typedef pair<ll, ll> p;
 
 
 /*     Segment Tree     */
@@ -82,7 +80,7 @@ ll get(int x, int s, int e, int l, int r) {
 /*     Compress     */
 
 vector<ll> i_pos, j_pos;
-vector<p> v;
+vector<pair<ll, ll>> v;
 
 void compress(){
 	sort(i_pos.begin(), i_pos.end());
@@ -98,7 +96,12 @@ void compress(){
 
 /*     Main     */
 
+void solve() {
+	
+}
+
 int main()
 {
     FAST;
+	solve();
 }
