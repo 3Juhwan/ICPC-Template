@@ -1,33 +1,35 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 #define FAST ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+#define all(v) v.begin(); v.end()
 #define ll long long
 #define INF 1e9+7
 #define MOD 1e9+7
+#define MAX 101010
 
 
 /*     Segment Tree     */
 
-const int treeSize = 80000;
-ll tree[treeSize << 1];
+const int sz = 80000;
+ll tree[sz << 1];
 
 void init()
 {
-    for(int i=treeSize-1; i>0; --i) {
+    for(int i=sz-1; i>0; --i) {
         tree[i] = tree[i << 1] + tree[i << 1|1];
     }
 }
 
 void update(int idx, ll val) {
-    tree[treeSize + idx] = val;
-    for(int i=(treeSize+idx) >> 1; i > 0; i >>= 1) {
+    tree[sz + idx] = val;
+    for(int i=(sz+idx) >> 1; i > 0; i >>= 1) {
         tree[i] = tree[i << 1] + tree[i << 1|1];
     }
 }
 
 ll sum(int left, int right) {
     ll ret = 0;
-    for(int l=left+treeSize, r=right+treeSize; l<=r; l>>=1, r>>=1) {
+    for(int l=left+sz, r=right+sz; l<=r; l>>=1, r>>=1) {
         if(l&1) ret += tree[l++];
         if(~r&1) ret += tree[r--];
     }
@@ -37,10 +39,10 @@ ll sum(int left, int right) {
 
 /* Segment Tree with lazy propagation */
 
-const int treeSize = 1e6+10;
+const int sz = 1e6+10;
 
-ll tree[treeSize*4];
-ll lazy[treeSize*4];
+ll tree[sz*4];
+ll lazy[sz*4];
 
 void update_lazy(int x, int s, int e) {
 	if (lazy[x] != 0) {
@@ -74,6 +76,38 @@ ll get(int x, int s, int e, int l, int r) {
 	if (s > r || e < l) return 0;
 	if (s >= l && e <= r) return tree[x];
 	return get(x * 2, s, (s + e) / 2, l, r) + get(x * 2 + 1, (s + e) / 2 + 1, e, l, r);
+}
+
+
+/*     Merge Sort Tree     */
+
+// #define all(v) v.begin(); v.end()
+
+int n, k, arr[MAX];
+const int sz = 1 << 17;
+vector<int> tree[sz << 1];
+
+void add(int x, int v) {
+    x |= sz; tree[x].push_back(v);
+}
+
+void build() {
+    for (int i=1; i<=n; i++) add(i, arr[i]);
+    for (int i=sz-1; i; i--) {
+        tree[i].resize(tree[i*2].size() + tree[i*2+1].size());
+        merge(all(tree[i*2]), all(tree[i*2+1]), tree[i].begin());
+    }
+}
+
+int query(int l, int r, int k) {
+    l |= sz, r |= sz;
+    int ret = 0;
+    while (l <= r) {
+        if (l & 1) ret += tree[l].end() - upper_bound(all(tree[l]), k), l++;
+        if (~r & 1) ret += tree[r].end() - upper_bound(all(tree[r]), k), r--;
+        l >>= 1, r >>= 1;
+    }
+    return ret;
 }
 
 
