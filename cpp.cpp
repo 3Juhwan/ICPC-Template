@@ -1,11 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define FAST ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
-#define all(v) v.begin(); v.end()
+#define all(v) v.begin(), v.end()
 #define ll long long
-#define INF 1e9+7
-#define MOD 1e9+7
-#define MAX 101010
+
+const int INF = 1e9+7;
+const int MOD = 1e9+7;
+const int MAX = 101010;
 
 
 /*     Segment Tree     */
@@ -84,7 +85,7 @@ ll get(int x, int s, int e, int l, int r) {
 // #define all(v) v.begin(); v.end()
 
 int n, k, arr[MAX];
-const int sz = 1 << 17;
+const int sz = 1 << 17; 	// should be power of 2 (2^n)
 vector<int> tree[sz << 1];
 
 void add(int x, int v) {
