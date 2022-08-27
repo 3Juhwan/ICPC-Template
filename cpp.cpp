@@ -1,8 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define FAST ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
-#define all(v) v.begin(), v.end()
 #define ll long long
+#define all(v) v.begin(), v.end()
+#define pii pair<int, int>
+#define pll pair<ll, ll>
 
 const int INF = 1e9+7;
 const int MOD = 1e9+7;
@@ -126,6 +128,34 @@ void compress(){
 		v[i].first = lower_bound(i_pos.begin(), i_pos.end(), v[i].first) - i_pos.begin();
 		v[i].second = lower_bound(j_pos.begin(), j_pos.end(), v[i].second) - j_pos.begin();
 	}
+}
+
+
+/*     CCW     */
+
+// #define pii pair<int, int>
+// #define pll pair<ll, ll>
+
+pll a, b, c, d;
+
+ll ccw(pll a, pll b, pll c) {
+    ll ret = a.first*b.second+b.first*c.second+c.first*a.second-(b.first*a.second+c.first*b.second+a.first*c.second);
+    return ret;
+    // Use below when you use isCross 
+    // if (ret > 0) return 1;
+    // if (ret == 0) return 0;
+    // return -1;
+}
+
+int isCross(pll a, pll b, pll c, pll d) {
+    if (ccw(a, b, c) * ccw(a, b, d) == 0 && ccw(c, d, a) * ccw(c, d, b) == 0) {
+        if (a > b) swap(a, b);
+        if (c > d) swap(c, d);
+        if (a <= d && c <= b) return 1;
+        return 0;
+    }
+    if (ccw(a, b, c) * ccw(a, b, d) <= 0 && ccw(c, d, a) * ccw(c, d, b) <= 0) return 1;
+    return 0;
 }
 
 
