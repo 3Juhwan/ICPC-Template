@@ -16,8 +16,7 @@ const int MAX = 101010;
 const int sz = 80000;
 ll tree[sz << 1];
 
-void init()
-{
+void init() {
     for(int i=sz-1; i>0; --i) {
         tree[i] = tree[i << 1] + tree[i << 1|1];
     }
@@ -84,8 +83,6 @@ ll get(int x, int s, int e, int l, int r) {
 
 /*     Merge Sort Tree     */
 
-// #define all(v) v.begin(); v.end()
-
 int n, k, arr[MAX];
 const int sz = 1 << 17; 	// should be power of 2 (2^n)
 vector<int> tree[sz << 1];
@@ -116,25 +113,16 @@ int query(int l, int r, int k) {
 
 /*     Compress     */
 
-vector<ll> i_pos, j_pos;
-vector<pair<ll, ll>> v;
+// 1 Dimension
 
-void compress(){
-	sort(i_pos.begin(), i_pos.end());
-	i_pos.erase(unique(i_pos.begin(), i_pos.end()), i_pos.end());
-	sort(j_pos.begin(), j_pos.end());
-	j_pos.erase(unique(j_pos.begin(), j_pos.end()), j_pos.end());
-	for (int i = 0; i < v.size(); i++){
-		v[i].first = lower_bound(i_pos.begin(), i_pos.end(), v[i].first) - i_pos.begin();
-		v[i].second = lower_bound(j_pos.begin(), j_pos.end(), v[i].second) - j_pos.begin();
-	}
-}
+// vector<int> arr(n);
+// for (auto &x: arr) cin >> x;
+vector<int> tmp(all(arr));
+sort(all(tmp)); tmp.erase(unique(all(tmp)), tmp.end());
+for (int& x: arr) x = lower_bound(all(tmp), x) - tmp.begin();
 
 
 /*     CCW     */
-
-// #define pii pair<int, int>
-// #define pll pair<ll, ll>
 
 pll a, b, c, d;
 
